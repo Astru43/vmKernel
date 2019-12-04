@@ -1,0 +1,14 @@
+#Object files
+*.o
+*.d
+
+#Binarys
+*.bin
+
+#Sysroot
+sysroot/
+sysroot/*
+
+#Preferences and vscode files
+vMKernel
+.vscode
