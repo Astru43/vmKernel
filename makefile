@@ -15,9 +15,13 @@ LDFLAGS?=
 LIBS?=
 
 CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
-CPPFLAGS:=$(CPPFLAGS) -D__is_kernel -Iinclude
+CPPFLAGS:=$(CPPFLAGS) -I "sysroot/usr/include"
 LDFLAGS:=$(LDFLAGS)
 LIBS:=$(LIBS) -nostdlib -lk -lgcc
+
+LINK_LIST:= \
+	$(OBJS) \
+	$(LIBS) \
 
 .PHONY: all clean install install-headers install-kernel
 .SUFFIXES: .o .c .s
@@ -25,11 +29,13 @@ LIBS:=$(LIBS) -nostdlib -lk -lgcc
 all: vMKernel.bin
 
 vMKernel.bin: $(OBJS) linker.ld
+	$(CC) -T linker.ld -o $@ $(CFLAGS) $(LINK_LIST) -L "sysroot/usr/lib"
+	grub-file --is-x86-multiboot vMKernel.bin
 
 .c.o: install-headers
 	$(CC) -MD -c $< -o $@ -std=gnu11 \
 	--sysroot="$(pwd)/sysroot" \
-	-isystem="/usr/include" $(CFLAGS) $(CPPFLAGS)
+	-isystem="sysroot/usr/include" $(CFLAGS) $(CPPFLAGS)
 
 .s.o:
 	$(CC) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)

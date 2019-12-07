@@ -4,6 +4,7 @@
 
 #Binarys
 *.bin
+*.iso
 
 #Sysroot
 sysroot/
