@@ -48,4 +48,7 @@ install-libs: $(BINARY) ../sysroot/usr/lib/
 ../sysroot/usr/lib/:
 	mkdir -p $@
 
-
+clean:
+	-rm $(BINARY) $(OBJS)
+	-rm string/*.d
+	-rm $(LIBK_OBJS)

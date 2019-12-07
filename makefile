@@ -44,7 +44,7 @@ sysroot/usr/include/:
 	mkdir -p $@
 
 clean:
-	rm -f $(OBJS) *.o */*.o
+	rm -f $(OBJS) *.o */*.o *.d */*.d
 	rm -f vMKernel.bin
 	rm -rf sysroot/boot/
 
